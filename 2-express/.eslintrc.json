@@ -12,6 +12,9 @@
     "import/extensions": ["error", "ignorePackages"],
     "no-console": "off",
     "no-underscore-dangle": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "prefer-const": "off", // ones here and below are specific to this project, ones above always useful
+    "import/no-mutable-exports": "off",
+    "no-import-assign": "off"
   }
 }
