@@ -5,14 +5,14 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon index.js",
-    "start:test": "cross-env NODE_ENV=test nodemon index.js",
+    "start": "cross-env NODE_ENV=development nodemon ./src/server.js",
+    "start:test": "cross-env NODE_ENV=test nodemon src/server.js",
     "test": "cross-env NODE_ENV=test node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll",
-    "make_migration": "knex migrate:make --knexfile ./db/knexfile.js",
-    "migrate": "knex migrate:latest --knexfile ./db/knexfile.js",
-    "rollback": "knex migrate:rollback --knexfile ./db/knexfile.js",
-    "make_seed": "knex seed:make --knexfile ./db/knexfile.js",
-    "run_seeds": "knex seed:run --knexfile ./db/knexfile.js"
+    "make_migration": "knex migrate:make",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "make_seed": "knex seed:make",
+    "run_seeds": "knex seed:run"
   },
   "keywords": [],
   "author": "",

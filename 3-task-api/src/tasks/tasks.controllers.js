@@ -1,5 +1,4 @@
 import { knex, TABLES } from '../db/db.js';
-import Joi from 'joi';
 import { createError } from '../utils.js';
 
 const getTasks = async (req, res) => {

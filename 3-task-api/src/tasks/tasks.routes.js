@@ -5,7 +5,7 @@ import {
   getTask,
   updateTask,
   deleteTask,
-} from '../controllers/tasks.js';
+} from './tasks.controllers.js';
 import Joi from 'joi';
 import { validateBody } from '../middlewares/validation.js';
 
