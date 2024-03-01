@@ -7,7 +7,7 @@ const getTasks = async (req, res) => {
 };
 
 const createTask = async (req, res, next) => {
-  const task = await knex(TABLES.TASK).insert(req.body).returning('*');
+  const [task] = await knex(TABLES.TASK).insert(req.body).returning('*');
   res.status(201).json(task);
 };
 

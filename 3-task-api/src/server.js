@@ -1,5 +1,5 @@
 import { app } from './app.js';
-import { loadEnv } from './config.js';
+import { loadEnv } from './utils.js';
 
 loadEnv();
 

@@ -6,21 +6,10 @@ import {
   updateTask,
   deleteTask,
 } from './tasks.controllers.js';
-import Joi from 'joi';
-import { validateBody } from '../middlewares/validation.js';
+import { validateBody } from '../middlewares.js';
+import { createSchema, updateSchema } from './tasks.schemas.js';
 
 const router = express.Router();
-
-const baseSchema = Joi.object({
-  description: Joi.string().max(20),
-  isCompleted: Joi.boolean(),
-});
-
-const createSchema = baseSchema.append({
-  description: Joi.required(),
-});
-
-const updateSchema = baseSchema.or('description', 'isCompleted');
 
 router
   .route('/')

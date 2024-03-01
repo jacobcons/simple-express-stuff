@@ -1,6 +1,5 @@
 import { knexSnakeCaseMappers } from 'objection';
-import { rootDir, loadEnv } from './src/config.js';
-import path from 'path';
+import { loadEnv, basePath } from './src/utils.js';
 
 loadEnv();
 
@@ -13,11 +12,11 @@ export default {
     password: process.env.DB_PASSWORD,
   },
   migrations: {
-    directory: path.join(rootDir, 'src', 'db', 'migrations'),
+    directory: basePath('src', 'db', 'migrations'),
     tableName: 'knex_migrations',
   },
   seeds: {
-    directory: path.join(rootDir, 'src', 'db', 'seeds'),
+    directory: basePath('src', 'db', 'seeds'),
   },
   ...knexSnakeCaseMappers(),
 };
