@@ -1,16 +1,16 @@
 import Joi from 'joi';
 
-const baseSchema = Joi.object({
+const baseTaskSchema = Joi.object({
   description: Joi.string().max(20),
   isCompleted: Joi.boolean(),
 });
 
-const createSchema = baseSchema.concat(
+const createTaskSchema = baseTaskSchema.concat(
   Joi.object({
     description: Joi.required(),
   })
 );
 
-const updateSchema = baseSchema.or('description', 'isCompleted');
+const updateTaskSchema = baseTaskSchema.or('description', 'isCompleted');
 
-export { createSchema, updateSchema };
+export { createTaskSchema, updateTaskSchema };

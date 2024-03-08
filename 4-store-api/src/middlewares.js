@@ -6,7 +6,9 @@ const validate = (schema, key) => {
       const value = await schema.validateAsync(req[key], {
         abortEarly: false,
       });
-      req[key] = value;
+      Object.defineProperty(req, key, {
+        value,
+      });
       next();
     } catch (err) {
       return next(createError(400, err.message));
@@ -16,16 +18,15 @@ const validate = (schema, key) => {
 
 const validateBody = (schema) => validate(schema, 'body');
 const validateQuery = (schema) => validate(schema, 'query');
-const validateParam = (schema) => validate(schema, 'params');
+const validateParams = (schema) => validate(schema, 'params');
 
 const errorHandler = (err, req, res, next) => {
-  res
-    .status(err.status || 500)
-    .json({ message: err.message || 'Something went wrong!' });
+  console.error(err.stack);
+  res.status(err.status || 500).json({ message: err.message });
 };
 
 const notFound = (req, res, next) => {
   next(createError(404, `Cannot ${req.method} ${req.originalUrl}`));
 };
 
-export { validateBody, validateQuery, validateParam, errorHandler, notFound };
+export { validateBody, validateQuery, validateParams, errorHandler, notFound };
