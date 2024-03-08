@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 const createError = (status, message) => {
   const err = new Error(message);
@@ -26,4 +27,10 @@ const hashPassword = async (password) => {
   return await bcrypt.hash(password, 10);
 };
 
-export { createError, basePath, loadEnv, hashPassword };
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_LIFETIME,
+  });
+};
+
+export { createError, basePath, loadEnv, hashPassword, createToken };
