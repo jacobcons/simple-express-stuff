@@ -1,6 +1,5 @@
-import knex from 'knex';
-import { TABLES } from '../db.js';
-import { POSSIBLE_JOB_STATUSES } from '../../features/jobs/jobs.constants.js';
+import { POSSIBLE_JOB_STATUSES } from '../../constants/jobs.constants.js';
+import { TABLES } from '../../constants/tables.constants.js';
 
 function up(knex) {
   return knex.schema
@@ -17,7 +16,7 @@ function up(knex) {
       table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
       table
         .foreign('user_id')
-        .references(`${TABLES.USER}.user_id`)
+        .references(`${TABLES.USER}.id`)
         .onDelete('CASCADE');
     })
     .then(() => {
@@ -43,7 +42,7 @@ function down(knex) {
       `
     DROP TRIGGER IF EXISTS update_job_updated_at ON ${TABLES.JOB};
     DROP FUNCTION IF EXISTS update_updated_at_column;
-  `
+  `,
     )
     .then(() => {
       return knex.raw(`DROP TABLE IF EXISTS ${TABLES.JOB} CASCADE`);

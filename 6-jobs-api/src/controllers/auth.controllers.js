@@ -1,13 +1,14 @@
-import { knex, TABLES } from '../../db/db.js';
-import { createError, hashPassword, createToken } from '../../utils.js';
-import jwt from 'jsonwebtoken';
+import { knex } from '../db/connection.js';
 import bcrypt from 'bcrypt';
+import { createError } from '../utils/errors.utils.js';
+import { createToken, hashPassword } from '../utils/auth.utils.js';
+import { TABLES } from '../constants/tables.constants.js';
 
 const register = async (req, res, next) => {
   const { name, email, password } = req.body;
 
   try {
-    const user = await knex(TABLES.USER)
+    const [user] = await knex(TABLES.USER)
       .insert({
         name,
         email,
@@ -21,7 +22,7 @@ const register = async (req, res, next) => {
     const userWithSameEmail = err.code === UNIQUE_CONSTRAINT_VIOLATION;
     if (userWithSameEmail) {
       return next(
-        createError(409, `User with email ${email} is already registered`)
+        createError(409, `User with email ${email} is already registered`),
       );
     }
   }
@@ -33,7 +34,7 @@ const login = async (req, res, next) => {
   const user = await knex(TABLES.USER).first('id', 'password').where({ email });
   const incorrectLoginError = createError(
     401,
-    "User with given email and password combination doesn't exist"
+    "User with given email and password combination doesn't exist",
   );
   if (!user) {
     return next(incorrectLoginError);

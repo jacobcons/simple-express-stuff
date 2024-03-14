@@ -1,7 +1,8 @@
 import Joi from 'joi';
+import { nameSchema } from './users.schemas.js';
 
 const registerSchema = Joi.object({
-  name: Joi.string().required().min(3).required(),
+  name: nameSchema,
   email: Joi.string().email().required(),
   password: Joi.string().min(8).required(),
 });

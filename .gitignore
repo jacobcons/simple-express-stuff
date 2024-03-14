@@ -1,2 +1,7 @@
 **/node_modules/
 **/.env*
+**/plan.txt
+
+# IDE / text editor
+**/.vscode/
+**/.idea/

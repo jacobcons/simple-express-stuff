@@ -1,5 +1,6 @@
 import { knexSnakeCaseMappers } from 'objection';
-import { loadEnv, basePath } from './src/utils.js';
+import {basePath} from "./src/utils/path.utils.js";
+import {loadEnv} from "./src/utils/env.utils.js";
 
 loadEnv();
 

@@ -1,0 +1,567 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "6-jobs-api",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "description": "",
+        "summary": "login",
+        "tags": [
+          "auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loginSchema"
+              },
+              "example": {
+                "email": "joey@gmail.com",
+                "password": "joeymcjoey"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "description": "",
+        "summary": "register",
+        "tags": [
+          "auth"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registerSchema"
+              },
+              "example": {
+                "email": "alex@gmail.com",
+                "name": "alex",
+                "password": "alexalex"
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/jobs": {
+      "get": {
+        "description": "",
+        "summary": "get jobs",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [
+          {
+            "name": "searchCompany",
+            "description": "",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/getJobsSchema/properties/searchCompany"
+            },
+            "example": "microsoft"
+          },
+          {
+            "name": "searchPosition",
+            "description": "",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/getJobsSchema/properties/searchPosition"
+            },
+            "example": "dev"
+          },
+          {
+            "name": "status",
+            "description": "",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/getJobsSchema/properties/status"
+            },
+            "example": "accepted"
+          },
+          {
+            "name": "sort",
+            "description": "",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/getJobsSchema/properties/sort"
+            },
+            "example": "created_at"
+          },
+          {
+            "name": "page",
+            "description": "",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/getJobsSchema/properties/page"
+            },
+            "example": "1"
+          },
+          {
+            "name": "limit",
+            "description": "",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/getJobsSchema/properties/limit"
+            },
+            "example": "2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "description": "",
+        "summary": "create job",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/createJobSchema"
+              },
+              "example": {
+                "company": "fender",
+                "position": "manager"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/jobs/{id}": {
+      "delete": {
+        "description": "",
+        "summary": "delete job",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "",
+        "summary": "update job",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateJobSchema"
+              },
+              "example": {
+                "company": "ikea",
+                "position": "general manager",
+                "status": "declined"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "description": "",
+        "summary": "get job",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/jobs/stats": {
+      "get": {
+        "description": "",
+        "summary": "get stats",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/getStatsResponseSchema"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/users/me": {
+      "get": {
+        "description": "",
+        "summary": "get user",
+        "tags": [
+          "users"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "description": "",
+        "summary": "update user",
+        "tags": [
+          "users"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateUserSchema"
+              },
+              "example": {
+                "name": "joey"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Base Environment"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": ""
+    },
+    {
+      "name": "jobs",
+      "description": ""
+    },
+    {
+      "name": "users",
+      "description": ""
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "loginSchema": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "registerSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "additionalProperties": false
+      },
+      "createJobSchema": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "company",
+          "position"
+        ],
+        "additionalProperties": false
+      },
+      "getJobsSchema": {
+        "type": "object",
+        "properties": {
+          "searchCompany": {
+            "type": "string"
+          },
+          "searchPosition": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "declined",
+              "interview",
+              "accepted"
+            ]
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "created_at",
+              "-created_at"
+            ]
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "additionalProperties": false
+      },
+      "updateJobSchema": {
+        "type": "object",
+        "properties": {
+          "company": {
+            "type": "string"
+          },
+          "position": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "declined",
+              "interview",
+              "accepted"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "updateUserSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "getStatsResponseSchema": {
+        "type": "object",
+        "properties": {
+          "statusCounts": {
+            "type": "object",
+            "properties": {
+              "pending": { "type": "integer" },
+              "declined": { "type": "integer" },
+              "interview": { "type": "integer" },
+              "accepted": { "type": "integer" }
+            }
+          },
+          "monthlyApplications": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date": { "type": "string" },
+                "count": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "example": {
+          "statusCounts": {
+            "pending": 2,
+            "declined": 2,
+            "interview": 0,
+            "accepted": 1
+          },
+          "monthlyApplications": [
+            {
+              "date": "Mar 2024",
+              "count": 3
+            },
+            {
+              "date": "Feb 2024",
+              "count": 0
+            },
+            {
+              "date": "Jan 2024",
+              "count": 0
+            },
+            {
+              "date": "Dec 2023",
+              "count": 0
+            },
+            {
+              "date": "Nov 2023",
+              "count": 0
+            },
+            {
+              "date": "Oct 2023",
+              "count": 1
+            }
+          ]
+        }
+      }
+    }
+  }
+}

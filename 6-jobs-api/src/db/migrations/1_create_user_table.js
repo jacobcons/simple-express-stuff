@@ -1,5 +1,6 @@
 import knex from 'knex';
-import { TABLES } from '../db.js';
+
+import {TABLES} from "../../constants/tables.constants.js";
 
 function up(knex) {
   return knex.schema.createTable(TABLES.USER, (table) => {

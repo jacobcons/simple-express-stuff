@@ -1,5 +1,5 @@
-import { hashPassword } from '../../utils.js';
-import { TABLES } from '../db.js';
+import {hashPassword} from "../../utils/auth.utils.js";
+import {TABLES} from "../../constants/tables.constants.js";
 
 export async function seed(knex) {
   // Deletes ALL existing entries
