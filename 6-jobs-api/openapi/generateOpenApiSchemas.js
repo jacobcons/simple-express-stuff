@@ -16,10 +16,7 @@ for (const schemaName in schemas) {
   openApiSchemas[schemaName] = openApiSchema;
 }
 
-// read in docs and add the schemas
-const openApiDocsPath = basePath('openapi', 'openapi.json');
-const openApiDocs = await readJson(openApiDocsPath);
-openApiDocs.components.schemas = openApiSchemas;
-
-// write to the docs with the now added schemas
-await writeJson(openApiDocsPath, openApiDocs, { spaces: 2 });
+// write schemas to json file
+await writeJson(basePath('openapi', 'schemas.json'), openApiSchemas, {
+  spaces: 2,
+});
