@@ -1,7 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import productsRouter from './routes/products.routes.js';
-import uploadImageRouter from './routes/uploadImage.routes.js';
+import {uploadImage} from './controllers/uploadImage.controllers.js';
 import { errorHandler, notFound } from './middlewares/errors.middlewares.js';
 import morgan from 'morgan';
 import { errors as celebrateErrorHandler } from 'celebrate';
@@ -14,13 +14,13 @@ app.use(morgan('tiny'));
 app.use(express.static('public'));
 app.use(express.json());
 
-app.use(
+app.post(
   '/api/v1/upload-image',
   fileUpload({
     useTempFiles: true,
     limits: { fileSize: MAX_UPLOAD_SIZE_BYTES },
   }),
-  uploadImageRouter,
+  uploadImage,
 );
 app.use('/api/v1/products', productsRouter);
 

@@ -4,6 +4,12 @@ import { MAX_UPLOAD_SIZE_MB } from '../constants/uploadImage.constants.js';
 import { basePath } from '../utils/path.utils.js';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export const uploadImageLocally = async (req, res) => {
   const { image } = req.files;
@@ -30,4 +36,15 @@ export const uploadImageLocally = async (req, res) => {
   res.json({
     url: `/uploads/${newImageName}`,
   });
+};
+
+export const uploadImage = async (req, res) => {
+  const { image } = req.files;
+  const { tempFilePath } = image;
+
+  const result = await cloudinary.uploader.upload(tempFilePath, {
+    folder: '7-file-upload',
+  });
+  await remove(tempFilePath);
+  res.json({ url: result.secure_url });
 };
