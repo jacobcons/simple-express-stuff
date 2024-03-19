@@ -42,9 +42,29 @@ export const uploadImage = async (req, res) => {
   const { image } = req.files;
   const { tempFilePath } = image;
 
-  const result = await cloudinary.uploader.upload(tempFilePath, {
-    folder: '7-file-upload',
-  });
-  await remove(tempFilePath);
-  res.json({ url: result.secure_url });
+  if (!image) {
+    await remove(tempFilePath);
+    throw createError(400, 'No image field provided');
+  }
+
+  if (!image.mimetype.startsWith('image')) {
+    await remove(tempFilePath);
+    throw createError(400, 'Upload must be an image ');
+  }
+
+  if (image.truncated) {
+    await remove(tempFilePath);
+    throw createError(400, `Upload cannot exceed ${MAX_UPLOAD_SIZE_MB}MB`);
+  }
+
+  try {
+    const result = await cloudinary.uploader.upload(tempFilePath, {
+      folder: '7-file-upload',
+    });
+    await remove(tempFilePath);
+    return res.json({ url: result.secure_url });
+  } catch (err) {
+    await remove(tempFilePath);
+    throw err;
+  }
 };
