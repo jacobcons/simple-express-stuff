@@ -1,6 +1,6 @@
 **/node_modules/
 **/.env*
-**/plan.txt
+10-ecommerce-api/plans.txt
 **/tmp
 
 # IDE / text editor
